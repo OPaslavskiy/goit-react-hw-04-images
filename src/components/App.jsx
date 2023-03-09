@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { GlobalStyle } from '../GlobalStyle';
 import { Layout } from '../Layout';
+import { GlobalStyle } from '../GlobalStyle';
 import { getPhoto } from '../services/getPhoto';
 import { TitelWithoutImg } from './App.styled';
 import { Searchbar } from './Searchbar/Searchbar';
