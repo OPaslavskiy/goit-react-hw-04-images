@@ -33,9 +33,7 @@ export class Searchbar extends Component {
     if (!this.state.value) {
       Notiflix.Notify.warning('Enter a search parameter');
     } else {
-      {
-        this.props.onSearch(this.state.value);
-      }
+      this.props.onSearch(this.state.value);
     }
     this.setState({ value: '' });
   };
