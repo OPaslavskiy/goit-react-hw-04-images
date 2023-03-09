@@ -33,27 +33,6 @@ export const App = () => {
     setShowBtn(false);
   }
 
-  // function getPhotos() {
-  //   if (searchParameter || page !== 1) {
-  //     getPhoto(searchParameter, page)
-  //       .then(response => response.json())
-  //       .then(photo => {
-  //         setGallery([...gallery, ...photo.hits]);
-  //         setStatus('resolved');
-  //         setShowBtn(page < Math.ceil(photo.totalHits / 12));
-  //         if (page === 1) {
-  //           Notiflix.Notify.success(
-  //             `We found ${photo.totalHits} photos for you...`
-  //           );
-  //         }
-  //       })
-  //       .catch(error => {
-  //         setError(error);
-  //         setStatus('rejected');
-  //       });
-  //   }
-  // }
-
   function handleLoad() {
     scroll.scrollMore(window.innerHeight - 125);
     console.log(`123456`);
@@ -66,7 +45,7 @@ export const App = () => {
         getPhoto(searchParameter, page)
           .then(response => response.json())
           .then(photo => {
-            setGallery([...gallery, ...photo.hits]);
+            setGallery(prevState => [...prevState, ...photo.hits]);
             setStatus('resolved');
             setShowBtn(page < Math.ceil(photo.totalHits / 12));
             if (page === 1) {
@@ -83,7 +62,6 @@ export const App = () => {
     }
     setSearchParameter(searchParameter);
     setPage(page);
-
     getPhotos();
   }, [searchParameter, page]);
 
