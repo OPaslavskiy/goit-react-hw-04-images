@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import {
   SearchbarHeder,
   SearchbarForm,
@@ -18,53 +18,49 @@ Notiflix.Notify.init({
   fontSize: '20px',
 });
 
-export class Searchbar extends Component {
-  state = {
-    value: '',
-  };
+export const Searchbar = ({ onSearch }) => {
+  const [value, setValue] = useState('');
 
-  handleChange = event => {
+  const handleChange = event => {
     const newSearch = event.target.value;
-    this.setState({ value: newSearch });
+    setValue(newSearch);
   };
 
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    if (!this.state.value) {
+    if (!value) {
       Notiflix.Notify.warning('Enter a search parameter');
     } else {
-      this.props.onSearch(this.state.value);
+      onSearch(value);
     }
-    this.setState({ value: '' });
+    setValue('');
   };
 
-  render() {
-    return (
-      <>
-        <Lebel href="https://github.com/OPaslavskiy">by OPaslavskyi</Lebel>
-        <SearchbarHeder>
-          <SearchbarForm onSubmit={this.handleSubmit} status={'pending'}>
-            <SearchFormBtn type="submit">
-              <FcSearch
-                style={{
-                  height: '32px',
-                  width: '32px',
-                }}
-              />
-              <SearchFormBtnLabel>Search</SearchFormBtnLabel>
-            </SearchFormBtn>
-
-            <SearchFormInput
-              type="text"
-              autocomplete="off"
-              autoFocus
-              placeholder="Search images and photos"
-              value={this.state.value}
-              onChange={this.handleChange}
+  return (
+    <>
+      <Lebel href="https://github.com/OPaslavskiy">by OPaslavskyi</Lebel>
+      <SearchbarHeder>
+        <SearchbarForm onSubmit={handleSubmit} status={'pending'}>
+          <SearchFormBtn type="submit">
+            <FcSearch
+              style={{
+                height: '32px',
+                width: '32px',
+              }}
             />
-          </SearchbarForm>
-        </SearchbarHeder>
-      </>
-    );
-  }
-}
+            <SearchFormBtnLabel>Search</SearchFormBtnLabel>
+          </SearchFormBtn>
+
+          <SearchFormInput
+            type="text"
+            autocomplete="off"
+            autoFocus
+            placeholder="Search images and photos"
+            value={value}
+            onChange={handleChange}
+          />
+        </SearchbarForm>
+      </SearchbarHeder>
+    </>
+  );
+};
