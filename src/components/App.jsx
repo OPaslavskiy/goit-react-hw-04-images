@@ -17,7 +17,7 @@ Notiflix.Notify.init({
   fontSize: '20px',
 });
 
-export const App = () => {
+const App = () => {
   const [gallery, setGallery] = useState([]);
   const [error, setError] = useState('');
   const [status, setStatus] = useState('stoped');
@@ -35,7 +35,6 @@ export const App = () => {
 
   function handleLoad() {
     scroll.scrollMore(window.innerHeight - 125);
-    console.log(`123456`);
     setPage(page + 1);
   }
 
