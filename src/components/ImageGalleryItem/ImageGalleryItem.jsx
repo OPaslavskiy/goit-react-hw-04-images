@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ImageItem, Image, ImageModal } from './ImageGalleryItem.styled';
+import { ImageItem, Image } from './ImageGalleryItem.styled';
 import ModalWindow from '../Modal/Modal';
 
 const ImageGalleryItem = photo => {

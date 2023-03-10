@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { Modal, Overlay } from './Modal.styled';
+import { Modal, Overlay, ImageModal } from './Modal.styled';
 
 const modalRoot = document.querySelector('#modal-root');
 
@@ -16,14 +16,12 @@ function ModalWindow({ close, alt, src }) {
 
   function handleKeyDown(e) {
     if (e.code === 'Escape') {
-      console.log(`escape`);
       close();
     }
   }
 
   const handleBackdropClick = event => {
     if (event.currentTarget === event.target) {
-      console.log(`backdrop`);
       close();
     }
   };
@@ -31,7 +29,7 @@ function ModalWindow({ close, alt, src }) {
   return createPortal(
     <Overlay onClick={handleBackdropClick}>
       <Modal>
-        <img src={src} alt={alt} />
+        <ImageModal src={src} alt={alt} />
       </Modal>
     </Overlay>,
     modalRoot
