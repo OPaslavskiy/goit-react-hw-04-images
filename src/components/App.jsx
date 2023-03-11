@@ -42,14 +42,13 @@ const App = () => {
     function getPhotos() {
       if (searchParameter || page !== 1) {
         getPhoto(searchParameter, page)
-          .then(response => response.json())
-          .then(photo => {
-            setGallery(prevState => [...prevState, ...photo.hits]);
+          .then(data => {
+            setGallery(prevState => [...prevState, ...data.hits]);
             setStatus('resolved');
-            setShowBtn(page < Math.ceil(photo.totalHits / 12));
+            setShowBtn(page < Math.ceil(data.totalHits / 12));
             if (page === 1) {
               Notiflix.Notify.success(
-                `We found ${photo.totalHits} photos for you...`
+                `We found ${data.totalHits} photos for you...`
               );
             }
           })
