@@ -24,13 +24,13 @@ const App = () => {
   const [page, setPage] = useState(1);
   const [searchParameter, setSearchParameter] = useState('');
   const [showBtn, setShowBtn] = useState(false);
-  const [flag, setFlag] = useState(false);
+  const [flag, setFlag] = useState(0);
 
   function formSubmitSearch(value) {
     setSearchParameter(value);
     setGallery([]);
     setPage(1);
-    setStatus('stoped');
+    setStatus('pending');
     setShowBtn(false);
     setFlag(true);
   }
@@ -42,13 +42,13 @@ const App = () => {
 
   useEffect(() => {
     function getPhotos() {
-      if ((searchParameter || page !== 1) && flag) {
-        setStatus('pending');
+      if ((searchParameter && flag) || page !== 1) {
         getPhoto(searchParameter, page)
           .then(data => {
             setGallery(prevState => [...prevState, ...data.hits]);
             setStatus('resolved');
             setShowBtn(page < Math.ceil(data.totalHits / 12));
+            setFlag(false);
             if (page === 1) {
               Notiflix.Notify.success(
                 `We found ${data.totalHits} photos for you...`
@@ -58,12 +58,10 @@ const App = () => {
           .catch(error => {
             setError(error);
             setStatus('rejected');
-          })
-          .finally(() => {
-            setFlag(false);
           });
       }
     }
+
     getPhotos();
   }, [searchParameter, page, flag]);
 
