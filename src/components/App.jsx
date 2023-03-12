@@ -24,6 +24,7 @@ const App = () => {
   const [page, setPage] = useState(1);
   const [searchParameter, setSearchParameter] = useState('');
   const [showBtn, setShowBtn] = useState(false);
+  const [flag, setFlag] = useState(false);
 
   function formSubmitSearch(value) {
     setSearchParameter(value);
@@ -31,6 +32,7 @@ const App = () => {
     setPage(1);
     setStatus('stoped');
     setShowBtn(false);
+    setFlag(true);
   }
 
   function handleLoad() {
@@ -40,7 +42,8 @@ const App = () => {
 
   useEffect(() => {
     function getPhotos() {
-      if (searchParameter || page !== 1) {
+      if ((searchParameter || page !== 1) && flag) {
+        setStatus('pending');
         getPhoto(searchParameter, page)
           .then(data => {
             setGallery(prevState => [...prevState, ...data.hits]);
@@ -55,11 +58,14 @@ const App = () => {
           .catch(error => {
             setError(error);
             setStatus('rejected');
+          })
+          .finally(() => {
+            setFlag(false);
           });
       }
     }
     getPhotos();
-  }, [searchParameter, page]);
+  }, [searchParameter, page, flag]);
 
   return (
     <Layout>
