@@ -58,8 +58,6 @@ const App = () => {
           });
       }
     }
-    setSearchParameter(searchParameter);
-    setPage(page);
     getPhotos();
   }, [searchParameter, page]);
 
